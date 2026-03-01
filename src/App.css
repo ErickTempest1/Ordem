@@ -1,0 +1,88 @@
+/* Estilo Global e Temático */
+:root {
+  --blood-red: #8b0000;
+  --neon-blue: #00d4ff;
+  --dark-gray: #1a1a1a;
+  --terminal-green: #00ff41;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #050505; /* Fundo quase preto */
+  color: #e0e0e0;
+  font-family: 'Courier New', Courier, monospace; /* Estilo máquina de escrever */
+}
+
+h1, h2, h3 {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--blood-red);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Botões Estilizados */
+button {
+  background-color: transparent;
+  color: #ccc;
+  border: 1px solid #444;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+button:hover {
+  background-color: var(--blood-red);
+  color: white;
+  border-color: var(--blood-red);
+  box-shadow: 0 0 10px var(--blood-red);
+}
+
+/* Inputs de Login e Dados */
+input {
+  background: #111;
+  border: 1px solid #333;
+  color: white;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 5px var(--neon-blue);
+}
+
+/* Cards e Painéis */
+.card-npc, .card-player {
+  background: #0d0d0d;
+  border: 1px solid #222;
+  border-left: 4px solid var(--blood-red); /* Detalhe lateral de sangue */
+  padding: 20px;
+  margin-bottom: 15px;
+  transition: transform 0.2s;
+}
+
+.card-npc:hover {
+  transform: scale(1.02);
+  border-color: #444;
+}
+
+/* Scrollbar Personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--blood-red);
+}
