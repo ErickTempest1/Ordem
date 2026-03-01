@@ -30,23 +30,22 @@ export default function Ficha({ player }: { player: any }) {
   const habilidadesAtuais = mascaraAtiva ? personagem.habilidades_mascara : personagem.habilidades_base;
   const temRituais = personagem.rituais && personagem.rituais.length > 0;
 
-  // COMPONENTE DE BARRA INTERATIVA RESPONSIVA
   const ControleVital = ({ label, atual, max, color, tipo }: any) => (
     <div style={{ marginBottom: '15px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', color, fontSize: '13px', fontWeight: 'bold', marginBottom: '5px' }}>
         <span>{label}</span>
         <span>{atual} / {max}</span>
       </div>
-      
-      {/* Container dos controles (Muda de Flex para Grid no mobile via CSS global se necessário, mas aqui vamos manter flex limpo) */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '5px', width: '100%', flexWrap: 'nowrap' }}>
-        <button onClick={() => alterarStatus(tipo, -5)} style={{ flex: '0 0 auto', background: '#400', color: 'white', border: 'none', padding: '8px 10px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', fontSize: '12px' }}>-5</button>
+        <button onClick={() => alterarStatus(tipo, -5)} style={{ flex: '0 0 auto', background: '#400', color: 'white', border: 'none', padding: '8px 12px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', fontSize: '12px' }}>-5</button>
+        <button onClick={() => alterarStatus(tipo, -1)} style={{ flex: '0 0 auto', background: '#200', color: '#ff4d4d', border: 'none', padding: '8px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>-1</button>
         
         <div style={{ flex: '1 1 auto', background: '#222', height: '10px', borderRadius: '5px', overflow: 'hidden' }}>
           <div style={{ width: `${(atual / max) * 100}%`, background: color, height: '100%', transition: 'width 0.3s' }}></div>
         </div>
         
-        <button onClick={() => alterarStatus(tipo, 5)} style={{ flex: '0 0 auto', background: '#040', color: 'white', border: 'none', padding: '8px 10px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', fontSize: '12px' }}>+5</button>
+        <button onClick={() => alterarStatus(tipo, 1)} style={{ flex: '0 0 auto', background: '#020', color: '#4caf50', border: 'none', padding: '8px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>+1</button>
+        <button onClick={() => alterarStatus(tipo, 5)} style={{ flex: '0 0 auto', background: '#040', color: 'white', border: 'none', padding: '8px 12px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', fontSize: '12px' }}>+5</button>
       </div>
     </div>
   );
@@ -81,8 +80,6 @@ export default function Ficha({ player }: { player: any }) {
         )}
       </header>
 
-      {/* --- GRID DE ATRIBUTOS RESPONSIVO --- */}
-      {/* Usamos a classe CSS definida no style tag abaixo */}
       <div className="grid-atributos">
         {['FOR', 'AGI', 'INT', 'VIG', 'PRE'].map((attr) => {
           const key = attr.toLowerCase() === 'for' ? 'forca' : attr.toLowerCase() === 'agi' ? 'agilidade' : attr.toLowerCase() === 'int' ? 'intelecto' : attr.toLowerCase() === 'vig' ? 'vigor' : 'presenca';
@@ -107,8 +104,6 @@ export default function Ficha({ player }: { player: any }) {
         <ControleVital label="SANIDADE (SAN)" atual={personagem.san_atual} max={personagem.san_max} color="#9933ff" tipo="san_atual" />
       </div>
 
-      {/* --- NAVEGAÇÃO DE ABAS RESPONSIVA --- */}
-      {/* overflowX permite scrollar horizontalmente se o celular for muito estreito */}
       <div style={{ display: 'flex', gap: '5px', marginTop: '20px', borderBottom: '1px solid #333', paddingBottom: '8px', overflowX: 'auto', whiteSpace: 'nowrap', WebkitOverflowScrolling: 'touch' }}>
         <button className={`aba-btn ${abaAtiva === 'habilidades' ? 'ativa' : ''}`} onClick={() => setAbaAtiva('habilidades')}>⚔️ HABS</button>
         {temRituais && <button className={`aba-btn ${abaAtiva === 'rituais' ? 'ativa' : ''}`} onClick={() => setAbaAtiva('rituais')}>📖 RITUAIS</button>}
@@ -118,63 +113,76 @@ export default function Ficha({ player }: { player: any }) {
       </div>
 
       <div style={{ marginTop: '15px', minHeight: '180px', fontSize: '13px' }}>
-        {/* Habilidades */}
         {abaAtiva === 'habilidades' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {habilidadesAtuais?.map((hab: any, index: number) => (
-              <div key={index} style={{ background: mascaraAtiva ? '#2a0000' : '#222', padding: '10px', borderRadius: '5px', borderLeft: mascaraAtiva ? '3px solid red' : '3px solid gold' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                  <strong style={{ color: mascaraAtiva ? '#ff4d4d' : '#fff' }}>{hab.nome}</strong>
-                  <span style={{ fontSize: '11px', color: '#888', background: '#000', padding: '2px 5px', borderRadius: '4px' }}>{hab.custo}</span>
+              <div key={index} style={{ background: mascaraAtiva ? '#2a0000' : '#222', padding: '12px', borderRadius: '5px', borderLeft: mascaraAtiva ? '3px solid red' : '3px solid gold' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <strong style={{ color: mascaraAtiva ? '#ff4d4d' : '#fff', fontSize: '14px' }}>{hab.nome}</strong>
+                  <span style={{ fontSize: '11px', color: '#888', background: '#000', padding: '2px 6px', borderRadius: '4px' }}>{hab.custo}</span>
                 </div>
-                <div style={{ color: '#ccc', fontSize: '12px' }}>{hab.efeito}</div>
+                <div style={{ color: '#ccc', fontSize: '13px', lineHeight: '1.4' }}>{hab.efeito}</div>
               </div>
             ))}
           </div>
         )}
 
-        {/* Rituais */}
         {abaAtiva === 'rituais' && temRituais && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {personagem.rituais?.map((ritual: any, index: number) => (
-              <div key={index} style={{ background: '#111', padding: '10px', borderRadius: '5px', borderLeft: '3px solid #9933ff' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                  <strong style={{ color: '#c299ff' }}>{ritual.nome}</strong>
-                  <span style={{ fontSize: '11px', color: '#888', background: '#000', padding: '2px 5px', borderRadius: '4px' }}>{ritual.custo}</span>
+              <div key={index} style={{ background: '#111', padding: '12px', borderRadius: '5px', borderLeft: '3px solid #9933ff' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <strong style={{ color: '#c299ff', fontSize: '14px' }}>{ritual.nome}</strong>
+                  <span style={{ fontSize: '11px', color: '#888', background: '#000', padding: '2px 6px', borderRadius: '4px' }}>{ritual.custo}</span>
                 </div>
-                <div style={{ color: '#ccc', fontSize: '12px' }}>{ritual.efeito}</div>
+                <div style={{ color: '#ccc', fontSize: '13px', lineHeight: '1.4' }}>{ritual.efeito}</div>
               </div>
             ))}
           </div>
         )}
 
-        {/* Perícias */}
         {abaAtiva === 'pericias' && (
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
             {personagem.pericias?.map((pericia: string, index: number) => (
-              <div key={index} style={{ background: '#1a1a1a', padding: '8px 12px', borderRadius: '4px', border: '1px solid #333', color: '#00ffcc', fontFamily: 'monospace', fontSize: '12px', textAlign: 'center' }}>
+              <div key={index} style={{ background: '#1a1a1a', padding: '10px 12px', borderRadius: '4px', border: '1px solid #333', color: '#00ffcc', fontFamily: 'monospace', fontSize: '13px', textAlign: 'center' }}>
                 {pericia}
               </div>
             ))}
           </div>
         )}
 
-        {/* Inventário */}
         {abaAtiva === 'inventario' && (
-          <ul style={{ background: '#111', padding: '15px 15px 15px 30px', borderRadius: '8px', border: '1px solid #333', color: '#ccc', lineHeight: '1.6', fontSize: '12px' }}>
-            {personagem.inventario?.map((item: string, index: number) => <li key={index} style={{ marginBottom: '5px' }}><strong>{item.split('(')[0]}</strong> {item.includes('(') ? `(${item.split('(')[1]}` : ''}</li>)}
+          <ul style={{ background: '#111', padding: '15px 15px 15px 35px', borderRadius: '8px', border: '1px solid #333', color: '#ccc', lineHeight: '1.8', fontSize: '13px' }}>
+            {personagem.inventario?.map((item: string, index: number) => <li key={index} style={{ marginBottom: '6px' }}><strong>{item.split('(')[0]}</strong> {item.includes('(') ? `(${item.split('(')[1]}` : ''}</li>)}
           </ul>
         )}
 
-        {/* Flashback */}
+        {/* --- ABA DE FLASHBACK CORRIGIDA --- */}
         {abaAtiva === 'flashback' && (
           <div style={{ background: '#111', padding: '15px', borderRadius: '8px', border: '1px solid #333' }}>
-            {personagem.codinome === 'Itália' && <div style={{ background: '#332200', padding: '8px', borderRadius: '4px', color: 'gold', fontSize: '11px', marginBottom: '10px', borderLeft: '3px solid gold' }}>Vantagem (Famiglia): Reduz -1 PE flashbacks sociais.</div>}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px' }}>
-              {[{nome: 'Ação Simples', PE: 1}, {nome: 'Ação Complexa', PE: 3}, {nome: 'Ação Improvável', PE: 6}].map(f => (
-                <div key={f.nome} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#1a1a1a', padding: '10px', borderRadius: '5px', borderLeft: `3px solid ${f.PE===1 ? '#4caf50' : f.PE===3 ? '#ffcc00' : '#ff4d4d'}` }}>
-                  <strong>{f.nome}</strong>
-                  <button onClick={() => alterarStatus('pe_atual', -f.PE)} style={{ background: f.PE===1 ? '#4caf50' : f.PE===3 ? '#ffcc00' : '#ff4d4d', color: 'black', border: 'none', padding: '6px 10px', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', fontSize: '11px' }}>{f.PE} PE</button>
+            <h3 style={{ color: 'gold', marginTop: 0, borderBottom: '1px solid #333', paddingBottom: '10px', fontSize: '16px' }}>🎞️ CENA DE FLASHBACK</h3>
+            <p style={{ fontSize: '12px', color: '#ccc', lineHeight: '1.5', marginBottom: '15px' }}>
+              Declare que seu personagem previu a situação e se preparou no passado. O Mestre aprova o custo pela complexidade da sua ideia.
+            </p>
+            
+            {personagem.codinome === 'Itália' && (
+              <div style={{ background: '#332200', padding: '10px', borderRadius: '4px', color: 'gold', fontSize: '12px', marginBottom: '15px', borderLeft: '3px solid gold' }}>
+                <strong>Vantagem (Famiglia):</strong> Reduz -1 PE em flashbacks sociais/contatos!
+              </div>
+            )}
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {[
+                {nome: 'Ação Simples', PE: 1, desc: 'Ex: Esconder uma arma na sala, destrancar uma porta.'},
+                {nome: 'Ação Complexa', PE: 3, desc: 'Ex: Plantar explosivos na fundação, subornar guardas.'},
+                {nome: 'Ação Improvável', PE: 6, desc: 'Ex: Hackear o sistema dias antes, ter fuga de helicóptero.'}
+              ].map(f => (
+                <div key={f.nome} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#1a1a1a', padding: '12px', borderRadius: '5px', borderLeft: `3px solid ${f.PE===1 ? '#4caf50' : f.PE===3 ? '#ffcc00' : '#ff4d4d'}` }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', paddingRight: '10px' }}>
+                    <strong style={{ color: 'white', fontSize: '14px' }}>{f.nome}</strong>
+                    <span style={{ fontSize: '11px', color: '#888', marginTop: '4px', lineHeight: '1.3' }}>{f.desc}</span>
+                  </div>
+                  <button onClick={() => alterarStatus('pe_atual', -f.PE)} style={{ background: f.PE===1 ? '#4caf50' : f.PE===3 ? '#ffcc00' : '#ff4d4d', color: 'black', border: 'none', padding: '8px 12px', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer', fontSize: '12px', flexShrink: 0 }}>{f.PE} PE</button>
                 </div>
               ))}
             </div>
@@ -183,14 +191,13 @@ export default function Ficha({ player }: { player: any }) {
 
       </div>
 
-      {/* --- ESTILOS NATIVOS COM MEDIA QUERIES (A Mágica do Mobile) --- */}
       <style>{`
         .ficha-container { 
           transition: all 0.5s ease; 
           padding: 20px; 
-          width: 95%; /* Ocupa quase tudo no mobile */
-          max-width: 650px; /* Limita no desktop */
-          margin: 10px auto; 
+          width: 90%; /* Margem de segurança de 10% na tela (respiro) */
+          max-width: 650px; 
+          margin: 20px auto; /* Afasta do topo do celular */
           background: #0d0d0d; 
           border-radius: 8px; 
           border: 1px solid #333; 
@@ -198,19 +205,15 @@ export default function Ficha({ player }: { player: any }) {
         }
         .modo-persona { background: #0a0000; box-shadow: 0 0 25px rgba(255,0,0,0.2); border: 1px solid red; }
         
-        /* GRID DE ATRIBUTOS RESPONSIVO */
         .grid-atributos { 
           display: grid; 
           gap: 8px; 
           margin: 15px 0;
-          /* Desktop: 6 colunas */
           grid-template-columns: repeat(6, 1fr); 
         }
 
-        /* AJUSTE PARA CELULAR (Media Query) */
         @media (max-width: 500px) {
           .grid-atributos {
-            /* Celular: 3 colunas */
             grid-template-columns: repeat(3, 1fr);
           }
         }
@@ -224,8 +227,8 @@ export default function Ficha({ player }: { player: any }) {
         .modo-persona .btn-mascara { background: red; color: black; border: 2px solid #ff4d4d; }
         
         .aba-btn {
-          background: transparent; color: #666; border: none; padding: 8px 10px; cursor: pointer;
-          font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 12px;
+          background: transparent; color: #666; border: none; padding: 8px 12px; cursor: pointer;
+          font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 13px;
           border-bottom: 2px solid transparent; transition: 0.3s;
         }
         .aba-btn.ativa { color: gold; border-bottom: 2px solid gold; }
