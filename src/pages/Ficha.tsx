@@ -82,8 +82,8 @@ export default function Ficha({ player }: { player: any }) {
       
       <button className="btn-mascara" onClick={() => setMascaraAtiva(!mascaraAtiva)}>
         {mascaraAtiva 
-          ? "🎭 MODO ASSASSINO ATIVO (CLIQUE PARA REPRIMIR)" 
-          : `👺 USAR GATILHO: ${personagem.gatilho?.toUpperCase()}`}
+          ? " MODO ASSASSINO ATIVO (CLIQUE PARA REPRIMIR)" 
+          : ` USAR GATILHO: ${personagem.gatilho?.toUpperCase()}`}
       </button>
 
       {mascaraAtiva && (
